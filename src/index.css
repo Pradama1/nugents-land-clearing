@@ -19,6 +19,13 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+}
+.app { overflow-x: clip; width: 100%; }
+img { max-width: 100%; }
 body {
   font-family: var(--font-body);
   color: var(--text-dark);
@@ -69,16 +76,20 @@ h1, h2, h3, h4 {
 
 .text-center { text-align: center; }
 
-/* Sticky Header */
+/* Header — transparent over hero, solid green on scroll */
 .header {
-  background: white;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 1000;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-  height: 90px;
   display: flex;
   align-items: center;
+  padding: 14px 0;
+  transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+}
+.header.scrolled {
+  background: var(--primary-color);
+  box-shadow: 0 4px 22px rgba(0,0,0,0.28);
+  padding: 8px 0;
 }
 
 .header-inner {
@@ -86,14 +97,39 @@ h1, h2, h3, h4 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  gap: 16px;
 }
 
+/* Upscaled script wordmark logo */
+.logo { display: block; line-height: 1; }
+.logo-script {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  display: block;
+  color: #ffffff;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+}
+.logo-sub {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: clamp(0.6rem, 1.3vw, 0.78rem);
+  font-weight: 700;
+  color: var(--accent-color);
+  display: block;
+  margin-top: 2px;
+  padding-left: 5px;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+}
+.header.scrolled .logo-script,
+.header.scrolled .logo-sub { text-shadow: none; }
+
+/* Footer logo-text (kept) */
 .logo-text {
   font-size: 1.2rem;
   line-height: 1.1;
   color: var(--primary-color);
 }
-
 .logo-text span {
   color: var(--accent-color);
   font-size: 0.8rem;
@@ -103,22 +139,26 @@ h1, h2, h3, h4 {
 .header-cta {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
 }
 
 .phone-top {
   font-weight: 800;
-  color: var(--primary-color);
-  font-size: 1.2rem;
+  color: #ffffff;
+  font-size: 1.15rem;
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.45);
 }
+.header.scrolled .phone-top { text-shadow: none; }
 
 /* Hero Section */
 .hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 88vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=2000');
+  padding-top: 120px;
+  background: linear-gradient(rgba(12,22,12,0.5), rgba(12,22,12,0.78)), url('/job-cleared-lot.jpg');
   background-size: cover;
   background-position: center;
   color: white;
@@ -311,7 +351,23 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 768px) {
-  .hero h1 { font-size: 2.5rem; }
+  .container { padding: 0 16px; }
+  .header { padding: 10px 0; }
+  .logo-script { font-size: 2rem; }
+  .logo-sub { font-size: 0.52rem; letter-spacing: 1.5px; }
+  .header-cta .btn { display: none; }   /* keep the phone, drop the button so nothing clips */
+  .phone-top { font-size: 0.95rem; }
+  .hero { min-height: 80vh; padding-top: 96px; }
+  .hero-content { max-width: 100%; }
+  .hero h1 { font-size: 1.95rem; }
+  .hero h2 { font-size: 0.95rem; }
+  .hero h1, .hero h2, .hero p { overflow-wrap: break-word; }
   .features-content { grid-template-columns: 1fr; }
-  .header-cta .btn { display: none; }
+  .trust-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .trust-item { font-size: 0.85rem; gap: 8px; }
+  .services-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  .logo-script { font-size: 1.7rem; }
+  .phone-top { font-size: 0.85rem; }
 }

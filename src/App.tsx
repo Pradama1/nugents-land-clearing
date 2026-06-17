@@ -1,37 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const App: React.FC = () => {
   const phone = "(352) 639-3496";
   const phoneLink = "tel:3526393496";
   const location = "Citrus County & West Central Florida";
 
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const services = [
     { 
       title: "Commercial Land Clearing", 
       description: "Complete site preparation for new developments, right-of-way maintenance, and large-scale acreage clearing.",
-      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800"
+      image: "/svc-clearing.jpg"
     },
     { 
       title: "Hazardous Tree Removal", 
       description: "Expert removal of high-risk trees near structures, power lines, or public areas using advanced rigging techniques.",
-      image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=800"
+      image: "/svc-tree.jpg"
     },
     { 
       title: "Stump Grinding & Removal", 
       description: "Full-depth stump grinding to clear the way for landscaping, paving, or new construction projects.",
-      image: "https://images.unsplash.com/photo-1590496793907-39b56f849410?auto=format&fit=crop&q=80&w=800"
+      image: "/svc-stump.jpg"
     }
   ];
 
   return (
     <div className="app">
-      {/* Sticky Header */}
-      <header className="header">
+      {/* Transparent header overlaid on hero, solid on scroll */}
+      <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <div className="container header-inner">
-          <div className="logo-text">
-            <strong>NUGENT'S</strong> TRACTOR & TREE
-            <span>PRO LAND CLEARING & TREE CARE</span>
-          </div>
+          <a href="#top" className="logo">
+            <span className="logo-script">Nugent's</span>
+            <span className="logo-sub">Tractor &amp; Tree, LLC</span>
+          </a>
           <div className="header-cta">
             <a href={phoneLink} className="phone-top">{phone}</a>
             <a href={phoneLink} className="btn btn-primary">Free Quote</a>
@@ -113,7 +121,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <div className="features-image">
-               <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1000" alt="Equipment at work" style={{width: '100%', borderRadius: '4px'}} />
+               <img src="/feature-equipment.jpg" alt="Land clearing equipment at work" style={{width: '100%', borderRadius: '4px'}} />
             </div>
           </div>
         </div>
@@ -157,7 +165,7 @@ const App: React.FC = () => {
           <div className="footer-grid">
             <div className="footer-col">
               <div className="logo-text" style={{color: 'white'}}>
-                <strong>NUGENT'S</strong> TRACTOR & TREE
+                <strong>NUGENT'S</strong> TRACTOR & TREE, LLC
               </div>
               <p style={{marginTop: '20px'}}>Locally owned and operated, providing safe, reliable and affordable land services you can trust.</p>
             </div>
