@@ -31,6 +31,8 @@ const App: React.FC = () => {
     }
   ];
 
+  const gallery = Array.from({ length: 11 }, (_, i) => `/gallery/work-${String(i + 1).padStart(2, '0')}.jpg`);
+
   return (
     <div className="app">
       {/* Transparent header overlaid on hero, solid on scroll */}
@@ -121,8 +123,25 @@ const App: React.FC = () => {
               </div>
             </div>
             <div className="features-image">
-               <img src="/feature-equipment.jpg" alt="Land clearing equipment at work" style={{width: '100%', borderRadius: '4px'}} />
+               <img src="/feature.jpg" alt="Nugent's Tractor & Tree crew on a tree removal job" style={{width: '100%', borderRadius: '4px'}} />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Work Gallery */}
+      <section className="gallery-section section-padding">
+        <div className="container">
+          <div className="text-center">
+            <h2>Our Work</h2>
+            <p>Real jobs, real results across West Central Florida.</p>
+          </div>
+          <div className="work-grid">
+            {gallery.map((src, i) => (
+              <div key={i} className="work-tile">
+                <img src={src} alt={`Nugent's Tractor & Tree completed job ${i + 1}`} loading="lazy" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
